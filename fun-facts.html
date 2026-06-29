@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Fun Facts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .fact-box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fact-text {
+            font-size: 1.3em;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .fact-number {
+            display: block;
+            font-size: 0.9em;
+            color: #999;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .fact-counter {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Fun Facts</h1>
+        
+        <div class="fact-box">
+            <div>
+                <p class="fact-text" id="fact">Click the button to discover an amazing fact!</p>
+                <span class="fact-number" id="counter">Fact 0 of 15</span>
+            </div>
+        </div>
+
+        <button onclick="generateNewFact()">Get New Fact ✨</button>
+        
+        <div class="fact-counter">
+            <p id="viewed">Facts viewed: 0</p>
+        </div>
+    </div>
+
+    <script>
+        const facts = [
+            "Honey never spoils! Archaeologists have found 3,000-year-old honey in Egyptian tombs that was still edible.",
+            "A group of flamingos is called a 'flamboyance'.",
+            "Octopuses have three hearts – two pump blood to the gills, while the third pumps it to the rest of the body.",
+            "Bananas are berries, but strawberries aren't technically berries!",
+            "The shortest war in history lasted only 38 minutes between Britain and Zanzibar in 1896.",
+            "Butterflies taste with their feet to find out whether the leaf they sit on is good to lay eggs on.",
+            "A group of crows is called a 'murder'.",
+            "The Great Wall of China isn't actually visible from space without aid.",
+            "Sloths only defecate once a week and can lose up to 30% of their body weight when they do.",
+            "Wombat poop is cube-shaped to prevent it from rolling away.",
+            "Venus rotates so slowly that a day on Venus is longer than a Venusian year.",
+            "Clownfish are all born male, and the dominant male can transform into a female if needed.",
+            "A group of pugs is called a 'grumble'.",
+            "The smell of petrichor (rain on dry earth) is caused by a compound called geosmin produced by bacteria.",
+            "Penguins have knees – they're just hidden under their feathers!"
+        ];
+
+        let currentFactIndex = -1;
+        let factsViewed = 0;
+        let viewedFacts = new Set();
+
+        function generateNewFact() {
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * facts.length);
+            } while (newIndex === currentFactIndex && facts.length > 1);
+
+            currentFactIndex = newIndex;
+
+            if (!viewedFacts.has(newIndex)) {
+                viewedFacts.add(newIndex);
+                factsViewed++;
+            }
+
+            document.getElementById('fact').textContent = facts[newIndex];
+            document.getElementById('counter').textContent = `Fact ${newIndex + 1} of ${facts.length}`;
+            document.getElementById('viewed').textContent = `Facts viewed: ${factsViewed}`;
+        }
+
+        // Generate initial fact on page load
+        window.addEventListener('DOMContentLoaded', generateNewFact);
+    </script>
+</body>
+</html>
